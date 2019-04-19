@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "841253825002",
+    "firebase_url": "https://mequasov.firebaseio.com",
+    "project_id": "mequasov",
+    "storage_bucket": "mequasov.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:841253825002:android:ec4747519bc62b9f",
+        "android_client_info": {
+          "package_name": "com.mequa.mequasovsoft"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "841253825002-3r1a6sj6nkpe8d8rkdeta2v6fquf2gqb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB1cwUn3x-Fmt4xnbgotUZQZVmbAnEALD8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "841253825002-3r1a6sj6nkpe8d8rkdeta2v6fquf2gqb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
