@@ -23,7 +23,7 @@ public class TaskListItem extends Item<TaskListViewHouder> {
 
     @Override
     public int getLayout() {
-        return 0 ; //R.layout.task_list_item;
+        return R.layout.medicaoitem;
     }
 
     @NonNull

@@ -10,21 +10,41 @@ import java.util.List;
 @IgnoreExtraProperties
 public class Medicao {
 
-    @SerializedName("created_at")
+    public Long id;
+
+    public String planta;
+
+    @SerializedName("temperatura")
     @Expose
     public int temperatura;
 
-    @SerializedName("description")
+    @SerializedName("umidade")
     @Expose
     public double umidade;
 
-    @SerializedName("done")
+    @SerializedName("chuvendo")
     @Expose
     public Boolean chuvendo;
 
-    @SerializedName("id")
+    @SerializedName("umidadear")
     @Expose
     public double umidadear;
+
+    public String getPlanta() {
+        return planta;
+    }
+
+    public void setPlanta(String planta) {
+        this.planta = planta;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public int getTemperatura() {
         return temperatura;
