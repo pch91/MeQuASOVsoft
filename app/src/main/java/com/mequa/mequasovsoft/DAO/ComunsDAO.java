@@ -35,8 +35,11 @@ public class ComunsDAO {
                                             , final FireBaseCalback fireBaseCalbackAdd, final FireBaseCalback fireBaseCalbackEdit
                                             , final FireBaseCalback fireBaseCalbackRemove, final FireBaseCalback fireBaseCalbackMoved)
             throws IllegalAccessException, InstantiationException {
-
-        Refdatabase.child(oclass.getSimpleName().toLowerCase() + "/" + UsertID).addChildEventListener(new ChildEventListener() {
+        String prefix = "";
+        if(UsertID.equals("")) {
+            prefix = "user/" + UsertID + "/";
+        }
+        Refdatabase.child(prefix+oclass.getSimpleName().toLowerCase()).addChildEventListener(new ChildEventListener() {
 
 
             @Override
@@ -74,8 +77,11 @@ public class ComunsDAO {
     public <T> void setEventiListener(final Class<T> oclass, final String UsertID, final String key, final FireBaseCalback fireBaseCalback)
             throws IllegalAccessException, InstantiationException {
 
-
-        Refdatabase.child(oclass.getSimpleName().toLowerCase() + "/" + UsertID).addValueEventListener(new ValueEventListener() {
+        String prefix = "";
+        if(UsertID.equals("")) {
+            prefix = "user/" + UsertID + "/";
+        }
+        Refdatabase.child(prefix+oclass.getSimpleName().toLowerCase()).addValueEventListener(new ValueEventListener() {
 
 
             @Override
@@ -95,7 +101,11 @@ public class ComunsDAO {
             throws IllegalAccessException, InstantiationException {
 
         //DatabaseReference thisref = Refdatabase.child(oclass.getSimpleName().toLowerCase()+"/UsertID");
-        Refdatabase.child(oclass.getSimpleName().toLowerCase() + "/" + UsertID).addListenerForSingleValueEvent(new ValueEventListener() {
+        String prefix = "";
+        if(UsertID.equals("")) {
+            prefix = "user/" + UsertID + "/";
+        }
+        Refdatabase.child(prefix+oclass.getSimpleName().toLowerCase()).addListenerForSingleValueEvent(new ValueEventListener() {
 
 
             @Override

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/MedicaoItem"
     android:layout_width="match_parent"
@@ -9,89 +10,101 @@
 
     <LinearLayout
         android:layout_width="368dp"
-        android:layout_height="wrap_content"
+        android:layout_height="159dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@android:drawable/alert_dark_frame"
         android:orientation="vertical"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="8dp">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="31dp"
-            android:gravity="center"
+            android:layout_height="32dp"
+            android:background="@drawable/common_google_signin_btn_icon_dark_normal_background"
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
+                android:id="@+id/texthumidade"
+                android:layout_width="100dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="TextView" />
+                android:hint="humidade"
+                android:text="humidade:"
+                android:textAlignment="viewStart" />
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/valuehumidade"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="TextView" />
+                android:text="" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="32dp"
+            android:background="@drawable/common_google_signin_btn_icon_dark_normal_background"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
+                android:id="@+id/texttemperatura"
+                android:layout_width="100dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="teste" />
+                android:hint="Temperatura"
+                android:text="Temperatura:"
+                android:textAlignment="viewStart" />
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/valuetemperatura"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="TextView" />
+                android:text="" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="36dp"
+            android:background="@drawable/common_google_signin_btn_icon_dark_normal_background"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
+                android:id="@+id/texthumidadeSolo"
+                android:layout_width="100dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="TextView" />
+                android:text="Humidade solo:"
+                android:textAlignment="viewStart" />
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/valuehumidadesolo"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="TextView" />
+                android:text="" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="35dp"
+            android:background="@drawable/common_google_signin_btn_icon_dark_normal_background"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
+                android:id="@+id/textchovendo"
+                android:layout_width="100dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="TextView" />
+                android:text="chovendo:"
+                android:textAlignment="viewStart" />
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/valuechovendo"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="TextView" />
+                android:text="" />
         </LinearLayout>
 
     </LinearLayout>

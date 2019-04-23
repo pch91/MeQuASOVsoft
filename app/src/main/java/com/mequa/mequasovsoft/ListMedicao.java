@@ -3,6 +3,8 @@ package com.mequa.mequasovsoft;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -12,6 +14,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import java.util.List;
 
 public class ListMedicao extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -58,6 +62,21 @@ public class ListMedicao extends AppCompatActivity
         getMenuInflater().inflate(R.menu.list_medicao, menu);
         return true;
     }
+
+    /*private void Load() throws InstantiationException, IllegalAccessException {
+        ListaPromocoesBO Lpbo = new ListaPromocoesBO();
+        Lpbo.setEventiListenerPromo(new FireBaseCalback() {
+            @Override
+            public <T> void onCalback(List<T> list) {
+                List<Promocao> lpromo = (List<Promocao>) list;
+                adapter.clear();
+                RecyclerView ListPromoView = findViewById(R.id.ListView);
+                ListPromoView.setLayoutManager(new GridLayoutManager(MenuListaActivity.this, 1));
+                ListPromoView.setAdapter(adapter);
+                populateViewListPessoa(lpromo,adapter,listener,presslistener);
+            }
+        },Config.ContantList);
+    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
