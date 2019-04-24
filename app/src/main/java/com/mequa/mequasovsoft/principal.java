@@ -1,5 +1,6 @@
 package com.mequa.mequasovsoft;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -8,6 +9,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.mequa.mequasovsoft.BO.MedicaoBO;
+import com.mequa.mequasovsoft.MODAL.Medicao;
+import com.mequa.mequasovsoft.MODAL.User;
 
 public class principal extends AppCompatActivity {
 
@@ -26,6 +31,42 @@ public class principal extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        User u = new User();
+        u.setCPF("5555555555555");
+        Medicao m = new Medicao();
+
+        m.setChuvendo(true);
+        m.setPlanta("teste");
+        m.setTemperatura(38);
+        m.setUmidade(1555);
+        m.setUmidadear(1588);
+
+
+        MedicaoBO mbo =  new MedicaoBO();
+        mbo.add(u,m,getApplicationContext());
+
+
+        m.setChuvendo(true);
+        m.setPlanta("teste");
+        m.setTemperatura(36);
+        m.setUmidade(1000);
+        m.setUmidadear(12222);
+
+        mbo =  new MedicaoBO();
+        mbo.add(u,m,getApplicationContext());
+
+        u.setCPF("2222222");
+
+        m.setChuvendo(true);
+        m.setPlanta("jogo");
+        m.setTemperatura(30);
+        m.setUmidade(10222);
+        m.setUmidadear(1333);
+
+        mbo =  new MedicaoBO();
+        mbo.add(u,m,getApplicationContext());
+
     }
 
     @Override

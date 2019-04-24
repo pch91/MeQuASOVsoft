@@ -15,6 +15,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class ComunsDAO {
 
@@ -24,7 +25,13 @@ public class ComunsDAO {
 
     public ComunsDAO() {
         if(database == null) {
-            this.database = FirebaseDatabase.getInstance();
+            try {
+                this.database = FirebaseDatabase.getInstance();
+            }catch (IllegalStateException e){
+
+                this.database = FirebaseDatabase.getInstance();
+            }
+
         }
         if(Refdatabase == null) {
             Refdatabase = database.getReference();
@@ -102,7 +109,7 @@ public class ComunsDAO {
 
         //DatabaseReference thisref = Refdatabase.child(oclass.getSimpleName().toLowerCase()+"/UsertID");
         String prefix = "";
-        if(UsertID.equals("")) {
+        if(!UsertID.equals("")) {
             prefix = "user/" + UsertID + "/";
         }
         Refdatabase.child(prefix+oclass.getSimpleName().toLowerCase()).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -145,6 +152,10 @@ public class ComunsDAO {
             }
         }
         fireBaseCalback.onCalback(list);
+    }
+
+    public String createTransactionID() throws Exception{
+        return UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();
     }
 
 }

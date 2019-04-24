@@ -10,7 +10,7 @@ import java.util.List;
 @IgnoreExtraProperties
 public class Medicao {
 
-    public Long id;
+    public String id;
 
     public String planta;
 
@@ -38,11 +38,11 @@ public class Medicao {
         this.planta = planta;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

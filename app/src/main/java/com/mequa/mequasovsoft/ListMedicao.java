@@ -15,10 +15,20 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.mequa.mequasovsoft.BO.MedicaoBO;
+import com.mequa.mequasovsoft.CALBACKS.FireBaseCalback;
+import com.mequa.mequasovsoft.MODAL.Medicao;
+import com.mequa.mequasovsoft.MODAL.User;
+import com.mequa.mequasovsoft.Util.Setings;
+import com.mequa.mequasovsoft.item_view_holder.MedicaoListItem;
+import com.xwray.groupie.GroupAdapter;
+
 import java.util.List;
 
 public class ListMedicao extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    public GroupAdapter adapter =  new GroupAdapter();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +36,10 @@ public class ListMedicao extends AppCompatActivity
         setContentView(R.layout.list_medicao);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        User u =  new User();
+        u.setCPF("2222222");
+        Setings.user = u;
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -44,6 +58,14 @@ public class ListMedicao extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        try {
+            Load();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -63,20 +85,26 @@ public class ListMedicao extends AppCompatActivity
         return true;
     }
 
-    /*private void Load() throws InstantiationException, IllegalAccessException {
-        ListaPromocoesBO Lpbo = new ListaPromocoesBO();
-        Lpbo.setEventiListenerPromo(new FireBaseCalback() {
+    private void Load() throws InstantiationException, IllegalAccessException {
+        MedicaoBO Lpbo = new MedicaoBO();
+        Lpbo.setEventiListenerMedicao(new FireBaseCalback() {
             @Override
             public <T> void onCalback(List<T> list) {
-                List<Promocao> lpromo = (List<Promocao>) list;
+                List<Medicao> lpromo = (List<Medicao>) list;
                 adapter.clear();
-                RecyclerView ListPromoView = findViewById(R.id.ListView);
-                ListPromoView.setLayoutManager(new GridLayoutManager(MenuListaActivity.this, 1));
-                ListPromoView.setAdapter(adapter);
-                populateViewListPessoa(lpromo,adapter,listener,presslistener);
+                RecyclerView ListmedicaoView = findViewById(R.id.medicaoListView);
+                ListmedicaoView.setLayoutManager(new GridLayoutManager(ListMedicao.this, 1));
+                ListmedicaoView.setAdapter(adapter);
+                populateViewListPessoa(lpromo,adapter);
             }
-        },Config.ContantList);
-    }*/
+        },Setings.user);
+    }
+
+    public void populateViewListPessoa(List<Medicao> lm, GroupAdapter ga){
+        for (Medicao m: lm) {
+            ga.add(new MedicaoListItem(m));
+        }
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
