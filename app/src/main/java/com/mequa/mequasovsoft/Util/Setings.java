@@ -12,4 +12,6 @@ public class Setings extends Application {
 
     public static User user;
 
+    public static Boolean offline = true;
+
 }

@@ -13,7 +13,6 @@ public class MedicaoBO {
     MedicaoDAO medicaoDao =  new MedicaoDAO();
 
     public void setEventiListenerMedicao(FireBaseCalback fireBaseCalback, User user) throws IllegalAccessException, InstantiationException{
-
         medicaoDao.getObject(Medicao.class, user.getCPF(), "",fireBaseCalback);
     }
 

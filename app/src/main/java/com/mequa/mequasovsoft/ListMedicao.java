@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.mequa.mequasovsoft.BO.MedicaoBO;
+import com.mequa.mequasovsoft.BO.PlantaBO;
 import com.mequa.mequasovsoft.CALBACKS.FireBaseCalback;
 import com.mequa.mequasovsoft.MODAL.Medicao;
 import com.mequa.mequasovsoft.MODAL.User;
@@ -41,7 +42,16 @@ public class ListMedicao extends AppCompatActivity
         u.setCPF("2222222");
         Setings.user = u;
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        PlantaBO pbo = new PlantaBO();
+        try {
+            pbo.setEventiListenerMedicao(getApplicationContext());
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        }
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.medir);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

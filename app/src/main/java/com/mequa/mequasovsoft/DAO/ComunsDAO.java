@@ -10,6 +10,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.mequa.mequasovsoft.Util.Setings;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -19,7 +20,7 @@ import java.util.UUID;
 
 public class ComunsDAO {
 
-    FirebaseDatabase database;
+    public static FirebaseDatabase database;
     DatabaseReference Refdatabase;
     private Object obj;
 
@@ -27,11 +28,12 @@ public class ComunsDAO {
         if(database == null) {
             try {
                 this.database = FirebaseDatabase.getInstance();
-            }catch (IllegalStateException e){
+                database.setPersistenceEnabled(Setings.offline);
 
+            }catch (Exception e){
                 this.database = FirebaseDatabase.getInstance();
+                database.setPersistenceEnabled(Setings.offline);
             }
-
         }
         if(Refdatabase == null) {
             Refdatabase = database.getReference();
@@ -85,7 +87,7 @@ public class ComunsDAO {
             throws IllegalAccessException, InstantiationException {
 
         String prefix = "";
-        if(UsertID.equals("")) {
+        if(UsertID != null && !UsertID.trim().isEmpty()) {
             prefix = "user/" + UsertID + "/";
         }
         Refdatabase.child(prefix+oclass.getSimpleName().toLowerCase()).addValueEventListener(new ValueEventListener() {

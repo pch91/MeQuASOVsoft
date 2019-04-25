@@ -20,15 +20,52 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_list_medicao" />
+    <!--LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:orientation="vertical"
+        app:layout_anchor="@+id/include"
+        app:layout_anchorGravity="right|bottom">
+
+        <TextView
+            android:id="@+id/legendamedir"
+            android:layout_width="82dp"
+            android:layout_height="36dp"
+            android:autoSizeMaxTextSize="@android:dimen/dialog_min_width_major"
+            android:autoSizeMinTextSize="@dimen/fab_margin"
+            android:background="@android:drawable/dialog_holo_light_frame"
+            android:backgroundTint="@color/common_google_signin_btn_text_dark_focused"
+            android:fontFamily="monospace"
+            android:gravity="top|right"
+            android:paddingLeft="5sp"
+            android:paddingRight="5sp"
+            android:text="Medir"
+            android:textAlignment="center"
+            android:textColor="@color/common_google_signin_btn_text_dark_default"
+            android:textStyle="bold" />
+
+
+
+
+    </LinearLayout-->
+    <include
+        android:id="@+id/include"
+        layout="@layout/content_list_medicao" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
+        android:id="@+id/medir"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="56dp"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
+        android:textDirection="inherit"
+        android:tooltipText="teste"
         app:backgroundTint="@color/common_google_signin_btn_text_dark_focused"
+        app:backgroundTintMode="src_in"
+        app:layout_anchor="@+id/include"
+        app:layout_anchorGravity="right|bottom"
         app:srcCompat="@android:drawable/ic_input_add" />
+
 
 </android.support.design.widget.CoordinatorLayout>
