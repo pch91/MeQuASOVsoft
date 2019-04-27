@@ -21,7 +21,7 @@ public class MedicaoListItem extends Item<MedicaoListViewHouder> {
         viewHolder.temperatura.setText(String.valueOf(medicao.getTemperatura()));
         viewHolder.humidade.setText(String.valueOf(medicao.getUmidadear()));
         viewHolder.humidadesolo.setText(String.valueOf(medicao.getUmidade()));
-        viewHolder.chovendo.setText(medicao.getChuvendo() ? "Sim" : "Não");
+        viewHolder.chovendo.setText(medicao.getChuvendo().equals(true) ? "Sim" : "Não");
     }
 
     @Override

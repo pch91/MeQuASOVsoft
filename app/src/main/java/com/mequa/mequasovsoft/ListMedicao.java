@@ -42,6 +42,9 @@ public class ListMedicao extends AppCompatActivity
         u.setCPF("2222222");
         Setings.user = u;
 
+        MedicaoBO m =  new MedicaoBO();
+        m.medir(getApplicationContext(),null);
+
         PlantaBO pbo = new PlantaBO();
         try {
             pbo.setEventiListenerMedicao(getApplicationContext());
