@@ -14,22 +14,31 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import com.mequa.mequasovsoft.BO.MedicaoBO;
 import com.mequa.mequasovsoft.BO.PlantaBO;
 import com.mequa.mequasovsoft.CALBACKS.FireBaseCalback;
 import com.mequa.mequasovsoft.MODAL.Medicao;
+import com.mequa.mequasovsoft.MODAL.Planta;
 import com.mequa.mequasovsoft.MODAL.User;
 import com.mequa.mequasovsoft.Util.Setings;
 import com.mequa.mequasovsoft.item_view_holder.MedicaoListItem;
 import com.xwray.groupie.GroupAdapter;
 
+import org.json.JSONException;
+
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ListMedicao extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     public GroupAdapter adapter =  new GroupAdapter();
+    private Spinner spn1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,13 +48,11 @@ public class ListMedicao extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         User u =  new User();
-        u.setCPF("2222222");
+        u.setCPF("2222223");
         Setings.user = u;
 
-        MedicaoBO m =  new MedicaoBO();
-        m.medir(getApplicationContext(),null);
-
-        PlantaBO pbo = new PlantaBO();
+        //Atualizar pantas
+        final PlantaBO pbo = new PlantaBO();
         try {
             pbo.setEventiListenerMedicao(getApplicationContext());
         } catch (IllegalAccessException e) {
@@ -54,12 +61,61 @@ public class ListMedicao extends AppCompatActivity
             e.printStackTrace();
         }
 
+        spn1 = (Spinner) findViewById(R.id.listadeplantas);
+
+        try {
+            List<Planta> lplanta =  pbo.listaAll(getApplicationContext());
+            List<String> lsnplanta =  new ArrayList<String>();
+            lsnplanta.add("Selecione uma planta.");
+
+            for (Planta p:lplanta) {
+                lsnplanta.add(p.getNome());
+            }
+
+            ArrayAdapter<String> arrayAdapter =
+                    new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, lsnplanta);
+
+            ArrayAdapter<String> spinnerArrayAdapter = arrayAdapter;
+            spinnerArrayAdapter.setDropDownViewResource(R.layout.planta_spinner_item);
+            spn1.setAdapter(spinnerArrayAdapter);
+
+            spn1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View v, int posicao, long id) {
+                    String nome = parent.getItemAtPosition(posicao).toString();
+
+                    try {
+                        if(!nome.equals("Selecione uma planta.")){
+                            Setings.planta = pbo.getPlanta(nome,getApplication());
+                        }else{
+                            Setings.planta = null;
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.medir);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            public void onClick(final View view) {
+                MedicaoBO m =  new MedicaoBO();
+                m.medir(view,getApplicationContext(),null);
             }
         });
 
@@ -72,14 +128,15 @@ public class ListMedicao extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        try {
-            Load();
+        try {            Load();
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
     }
+
+
 
     @Override
     public void onBackPressed() {

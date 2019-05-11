@@ -8,7 +8,7 @@ public class Setings extends Application {
 
     public static String tokenAut;
 
-    public static Planta planta;
+    public static Planta planta = null;
 
     public static User user;
 

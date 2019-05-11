@@ -10,17 +10,17 @@ import org.json.JSONObject;
 public class Planta {
 
     public String nome ;
-    public int temperatura;
-    public double umidade;
-    public Boolean chuvendo;
-    public double umidadear;
+    public String temperatura;
+    public String umidade;
+    public boolean chuvendo;
+    public String umidadear;
 
 
     public Planta(){
 
     }
 
-    public Planta(String nome, int temperatura, double umidade, boolean chuvendo, double umidadear) {
+    public Planta(String nome, String temperatura, String umidade, boolean chuvendo, String umidadear) {
         this.nome = nome;
         this.temperatura = temperatura;
         this.umidade = umidade;
@@ -30,10 +30,10 @@ public class Planta {
 
     public Planta(JSONObject j) throws JSONException {
         this.nome = j.getString("name");
-        this.temperatura = j.getInt("temperatura");
-        this.umidade = j.getDouble("umidade");
+        this.temperatura = j.getString("temperatura");
+        this.umidade = j.getString("umidade");
         this.chuvendo = j.getBoolean("chuvendo");
-        this.umidadear = j.getDouble("umidadear");
+        this.umidadear = j.getString("umidadear");
     }
 
 
@@ -49,19 +49,19 @@ public class Planta {
         this.nome = nome;
     }
 
-    public int getTemperatura() {
+    public String getTemperatura() {
         return temperatura;
     }
 
-    public void setTemperatura(int temperatura) {
+    public void setTemperatura(String temperatura) {
         this.temperatura = temperatura;
     }
 
-    public double getUmidade() {
+    public String getUmidade() {
         return umidade;
     }
 
-    public void setUmidade(double umidade) {
+    public void setUmidade(String umidade) {
         this.umidade = umidade;
     }
 
@@ -73,11 +73,11 @@ public class Planta {
         this.chuvendo = chuvendo;
     }
 
-    public double getUmidadear() {
+    public String getUmidadear() {
         return umidadear;
     }
 
-    public void setUmidadear(double umidadear) {
+    public void setUmidadear(String umidadear) {
         this.umidadear = umidadear;
     }
 

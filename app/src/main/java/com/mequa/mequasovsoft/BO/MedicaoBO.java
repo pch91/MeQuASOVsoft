@@ -1,12 +1,14 @@
 package com.mequa.mequasovsoft.BO;
 
+import android.app.Activity;
 import android.content.Context;
+import android.support.design.widget.Snackbar;
+import android.view.View;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.mequa.mequasovsoft.CALBACKS.FireBaseCalback;
 import com.mequa.mequasovsoft.CALBACKS.MedicaoApiBaseCalback;
 import com.mequa.mequasovsoft.DAO.MedicaoDAO;
+import com.mequa.mequasovsoft.ListMedicao;
 import com.mequa.mequasovsoft.MODAL.Medicao;
 import com.mequa.mequasovsoft.MODAL.User;
 import com.mequa.mequasovsoft.R;
@@ -25,6 +27,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MedicaoBO {
+
     MedicaoDAO medicaoDao =  new MedicaoDAO();
 
     public void setEventiListenerMedicao(FireBaseCalback fireBaseCalback, User user) throws IllegalAccessException, InstantiationException{
@@ -39,50 +42,63 @@ public class MedicaoBO {
         }
     }
 
-    public Medicao medir(Context c,MedicaoApiBaseCalback callback){
+    public Medicao medir(View view, Context c, MedicaoApiBaseCalback callback) {
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
 
-        httpClient.addInterceptor(new Interceptor() {
-            @Override
-            public Response intercept(Chain chain) throws IOException {
-                Request request = chain.request().newBuilder().build();
-                return chain.proceed(request);
-            }
-        });
+        if (Setings.planta != null) {
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(c.getString(R.string.url))
-                .addConverterFactory(GsonConverterFactory.create()).client(httpClient.build())
-                .build();
+            httpClient.addInterceptor(new Interceptor() {
+                @Override
+                public Response intercept(Chain chain) throws IOException {
+                    Request request = chain.request().newBuilder().build();
+                    return chain.proceed(request);
+                }
+            });
 
-        Medicaoapi medicaoapi = retrofit.create(Medicaoapi.class);
-        Call<Medicao> clmedicao = medicaoapi.loaddescription();
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(c.getString(R.string.url))
+                    .addConverterFactory(GsonConverterFactory.create()).client(httpClient.build())
+                    .build();
 
-        clmedicao.enqueue(new Callback<Medicao>() {
-            Context c;
-            MedicaoApiBaseCalback callb;
+            Medicaoapi medicaoapi = retrofit.create(Medicaoapi.class);
+            Call<Medicao> clmedicao = medicaoapi.loaddescription();
 
-           public  Callback<Medicao> load(Context c,MedicaoApiBaseCalback call){
-                this.c = c;
-                this.callb = call;
-                return this;
-            }
+            clmedicao.enqueue(new Callback<Medicao>() {
+                Context c;
+                View view;
+                MedicaoApiBaseCalback callb;
 
-            @Override
-            public void onResponse(Call<Medicao> call, retrofit2.Response<Medicao> response) {
-                if(response.isSuccessful()){
-                    Medicao medicao =  response.body();
-                    add(Setings.user,medicao,c);
-                    if(callb != null) {
-                        callb.onCalback(medicao);
+                public Callback<Medicao> load(View view,Context c, MedicaoApiBaseCalback call) {
+                    this.c = c;
+                    this.callb = call;
+                    this.view = view;
+                    return this;
+                }
+
+                @Override
+                public void onResponse(Call<Medicao> call, retrofit2.Response<Medicao> response) {
+                    if (response.isSuccessful()) {
+                        Medicao medicao = response.body();
+                        medicao.setPlanta(Setings.planta.getNome());
+                        add(Setings.user, medicao, c);
+                        if (callb != null) {
+                            callb.onCalback(medicao);
+                        }
+
+                        Snackbar.make(view, "Medida Realizada", Snackbar.LENGTH_LONG).show();
                     }
                 }
-            }
-            @Override
-            public void onFailure(Call<Medicao> call, Throwable t) {
-                int a = 4;
-            }
-        }.load(c,callback));
+
+                @Override
+                public void onFailure(Call<Medicao> call, Throwable t) {
+                    int a = 4;
+                }
+            }.load(view,c, callback));
+
+        } else {
+
+            Snackbar.make(view, "Por favor, Selecione uma planta.", Snackbar.LENGTH_LONG).show();
+        }
         return null;
     }
 }

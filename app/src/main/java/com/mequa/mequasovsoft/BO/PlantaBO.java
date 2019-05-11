@@ -46,7 +46,7 @@ public class PlantaBO {
     }
 
     public void add(Planta p, Context c) throws IOException {
-        FileOutputStream output = c.openFileOutput("Plantas.txt", Context.MODE_APPEND);
+        FileOutputStream output = c.openFileOutput("Plantas.txt", Context.MODE_PRIVATE);
         OutputStreamWriter escreve = new OutputStreamWriter(output);
 
         escreve.append(p.to_jeson());
