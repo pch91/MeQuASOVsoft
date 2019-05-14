@@ -172,7 +172,7 @@ public class ListMedicao extends AppCompatActivity
 
     public void populateViewListPessoa(List<Medicao> lm, GroupAdapter ga){
         for (Medicao m: lm) {
-            ga.add(new MedicaoListItem(m));
+            ga.add(new MedicaoListItem(m, getApplicationContext()));
         }
     }
 

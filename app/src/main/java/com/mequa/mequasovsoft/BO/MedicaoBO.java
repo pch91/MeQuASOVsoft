@@ -31,7 +31,7 @@ public class MedicaoBO {
     MedicaoDAO medicaoDao =  new MedicaoDAO();
 
     public void setEventiListenerMedicao(FireBaseCalback fireBaseCalback, User user) throws IllegalAccessException, InstantiationException{
-        medicaoDao.getObject(Medicao.class, user.getCPF(), "",fireBaseCalback);
+        medicaoDao.setEventiListener(Medicao.class, user.getCPF(), "",fireBaseCalback);
     }
 
     public void add(User u,Medicao medicao, Context c){
