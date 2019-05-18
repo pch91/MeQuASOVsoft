@@ -69,19 +69,41 @@
         android:id="@+id/include"
         layout="@layout/content_list_medicao" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/medir"
+    <FrameLayout
         android:layout_width="wrap_content"
-        android:layout_height="56dp"
+        android:layout_height="95dp"
         android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        android:textDirection="inherit"
-        android:tooltipText="teste"
-        app:backgroundTint="@color/common_google_signin_btn_text_dark_focused"
-        app:backgroundTintMode="src_in"
-        app:layout_anchor="@+id/include"
-        app:layout_anchorGravity="right|bottom"
-        app:srcCompat="@android:drawable/ic_input_add" />
+        app:layout_anchorGravity="right|bottom">
 
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/medir"
+            android:layout_width="wrap_content"
+            android:layout_height="56dp"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            android:textDirection="inherit"
+            android:tooltipText="teste"
+            app:backgroundTint="@color/common_google_signin_btn_text_dark_focused"
+            app:backgroundTintMode="src_in"
+            app:layout_anchor="@+id/include"
+            app:layout_anchorGravity="right|bottom"
+            app:srcCompat="@android:drawable/ic_input_add" />
+
+        <TextView
+            android:id="@+id/TextMedir"
+            android:layout_width="71dp"
+            android:layout_height="74dp"
+            android:layout_gravity="center_horizontal|top"
+            android:hint="medir"
+            android:text="medir"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="@color/common_google_signin_btn_text_dark_focused"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:backgroundTint="@color/common_google_signin_btn_text_dark_focused"
+            app:layout_anchorGravity="center_horizontal|top" />
+
+    </FrameLayout>
 
 </android.support.design.widget.CoordinatorLayout>

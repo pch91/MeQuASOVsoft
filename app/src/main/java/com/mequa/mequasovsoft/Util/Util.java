@@ -1,5 +1,10 @@
 package com.mequa.mequasovsoft.Util;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class Util {
     public static int[] convertElStringToInt(String[] s){
         int[] x = new int[2];
@@ -16,4 +21,26 @@ public class Util {
         }
         return x;
     }
+
+    public static Date convertStringTodate(String date) throws ParseException {
+        return new SimpleDateFormat(DATE_FORMAT).parse(date);
+    }
+
+    public static String convertDateToString(Date date) {
+        return new SimpleDateFormat(DATE_FORMAT).format(date);
+    }
+
+    final static String DATE_FORMAT = "dd/MM/yyyy hh:mm:ss";
+
+    public static boolean isDateValid(String date) {
+        try {
+            DateFormat df = new SimpleDateFormat(DATE_FORMAT);
+            df.setLenient(false);
+            df.parse(date);
+            return true;
+        } catch (ParseException e) {
+            return false;
+        }
+    }
+
 }

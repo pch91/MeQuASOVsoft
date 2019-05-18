@@ -32,6 +32,8 @@ import org.json.JSONException;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class ListMedicao extends AppCompatActivity
@@ -161,6 +163,7 @@ public class ListMedicao extends AppCompatActivity
             @Override
             public <T> void onCalback(List<T> list) {
                 List<Medicao> lpromo = (List<Medicao>) list;
+                Collections.sort(lpromo);
                 adapter.clear();
                 RecyclerView ListmedicaoView = findViewById(R.id.medicaoListView);
                 ListmedicaoView.setLayoutManager(new GridLayoutManager(ListMedicao.this, 1));

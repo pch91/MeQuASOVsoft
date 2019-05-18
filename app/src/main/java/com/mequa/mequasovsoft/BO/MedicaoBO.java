@@ -1,6 +1,5 @@
 package com.mequa.mequasovsoft.BO;
 
-import android.app.Activity;
 import android.content.Context;
 import android.support.design.widget.Snackbar;
 import android.view.View;
@@ -8,7 +7,6 @@ import android.view.View;
 import com.mequa.mequasovsoft.CALBACKS.FireBaseCalback;
 import com.mequa.mequasovsoft.CALBACKS.MedicaoApiBaseCalback;
 import com.mequa.mequasovsoft.DAO.MedicaoDAO;
-import com.mequa.mequasovsoft.ListMedicao;
 import com.mequa.mequasovsoft.MODAL.Medicao;
 import com.mequa.mequasovsoft.MODAL.User;
 import com.mequa.mequasovsoft.R;
@@ -16,6 +14,7 @@ import com.mequa.mequasovsoft.REST.Medicaoapi;
 import com.mequa.mequasovsoft.Util.Setings;
 
 import java.io.IOException;
+import java.util.Date;
 
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -80,6 +79,7 @@ public class MedicaoBO {
                     if (response.isSuccessful()) {
                         Medicao medicao = response.body();
                         medicao.setPlanta(Setings.planta.getNome());
+                        medicao.setDatamedicaoDate(new Date());
                         add(Setings.user, medicao, c);
                         if (callb != null) {
                             callb.onCalback(medicao);
