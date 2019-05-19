@@ -1,6 +1,14 @@
 package com.mequa.mequasovsoft.MODAL;
 
+import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 @IgnoreExtraProperties
 public class User {
@@ -25,11 +33,31 @@ public class User {
         this.cpf = CPF;
     }
 
-    public String getCell() {
+    public String getSenha() {
         return senha;
     }
 
-    public void setCell(String senha) {
+    public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public User(){};
+
+    public User(JSONObject j) throws JSONException {
+        this.cpf = j.getString("CPF");
+        this.id = j.getString("CPF");
+    }
+
+    @Exclude
+    public String to_jeson() {
+
+        JSONObject obj = new JSONObject();
+
+        try {
+            obj.put("CPF", getCPF());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return obj.toString();
     }
 }

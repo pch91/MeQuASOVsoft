@@ -1,5 +1,7 @@
 package com.mequa.mequasovsoft;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -17,9 +19,11 @@ import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.mequa.mequasovsoft.BO.MedicaoBO;
 import com.mequa.mequasovsoft.BO.PlantaBO;
+import com.mequa.mequasovsoft.BO.UserBO;
 import com.mequa.mequasovsoft.CALBACKS.FireBaseCalback;
 import com.mequa.mequasovsoft.MODAL.Medicao;
 import com.mequa.mequasovsoft.MODAL.Planta;
@@ -49,9 +53,7 @@ public class ListMedicao extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        User u =  new User();
-        u.setCPF("2222223");
-        Setings.user = u;
+
 
         //Atualizar pantas
         final PlantaBO pbo = new PlantaBO();
@@ -130,7 +132,10 @@ public class ListMedicao extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        try {            Load();
+        ((TextView) navigationView.getHeaderView(0).findViewById(R.id.CPFUser)).setText(Setings.user.cpf);
+
+        try {
+            Load();
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
@@ -201,7 +206,18 @@ public class ListMedicao extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_sair) {
-            // Handle the camera action
+            UserBO ubo = new UserBO();
+            try {
+                ubo.Deslogando(getApplicationContext());
+                Intent intent = new Intent(ListMedicao.this,principal.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
