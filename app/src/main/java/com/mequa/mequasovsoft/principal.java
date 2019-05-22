@@ -10,16 +10,20 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.gms.common.util.Strings;
+import com.mequa.mequasovsoft.BO.PlantaBO;
 import com.mequa.mequasovsoft.BO.UserBO;
 import com.mequa.mequasovsoft.CALBACKS.UserCalback;
 import com.mequa.mequasovsoft.MODAL.User;
 import com.mequa.mequasovsoft.Util.Setings;
+import com.mequa.mequasovsoft.Util.BaseActivity;
 
 import org.json.JSONException;
 
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
-public class principal extends AppCompatActivity {
+public class principal extends BaseActivity {
 
     UserBO ubo =  new UserBO();
 
@@ -34,7 +38,18 @@ public class principal extends AppCompatActivity {
         ((Button) findViewById(R.id.buttonCadastrar)).setOnClickListener(cadastrar);
         ((Button) findViewById(R.id.buttonentrar)).setOnClickListener(logar);
 
+        //Atualizar pantas
+        final PlantaBO pbo = new PlantaBO();
+        try {
+            pbo.setEventiListenerMedicao(getApplicationContext());
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        }
+
         verificaLogado();
+       // isInternetAvailable();
     }
 
     public void verificaLogado(){
@@ -84,6 +99,18 @@ public class principal extends AppCompatActivity {
         }
     };
 
+    public void isInternetAvailable() {
+        if(!isOnline()){
+            Snackbar.make(findViewById(R.id.viewPrincipal), R.string.msg_erro_offline, Snackbar.LENGTH_INDEFINITE)
+                    .setAction(R.string.msg_alerta_wifi, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            openWifi();
+                        }
+                    }).show();
+        }
+    }
+
     View.OnClickListener cadastrar = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -107,31 +134,9 @@ public class principal extends AppCompatActivity {
                     }
                 });
             }else{
-                Snackbar.make(v, "CPF e Senha não podem Estar Brancos.", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(v, R.string.msg_erro_LoginErrado, Snackbar.LENGTH_LONG).show();
             }
 
         }
     };
-
-    /*@Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_principal, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }*/
 }

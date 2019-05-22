@@ -1,6 +1,9 @@
 package com.mequa.mequasovsoft.BO;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.provider.Settings;
 import android.support.design.widget.Snackbar;
 import android.view.View;
 
@@ -15,6 +18,10 @@ import com.mequa.mequasovsoft.Util.Setings;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -41,63 +48,83 @@ public class MedicaoBO {
         }
     }
 
-    public Medicao medir(View view, Context c, MedicaoApiBaseCalback callback) {
-        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+    public Medicao medir(View view, Context c, MedicaoApiBaseCalback callback, View.OnClickListener wifi) {
+        OkHttpClient httpClient = new OkHttpClient.Builder()
+                .connectTimeout(1, TimeUnit.MINUTES)
+                .readTimeout(50, TimeUnit.SECONDS)
+                .writeTimeout(30, TimeUnit.SECONDS).build();
+
 
         if (Setings.planta != null) {
 
-            httpClient.addInterceptor(new Interceptor() {
+            /*httpClient.addInterceptor(new Interceptor() {
                 @Override
                 public Response intercept(Chain chain) throws IOException {
                     Request request = chain.request().newBuilder().build();
                     return chain.proceed(request);
                 }
-            });
+            });*/
 
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(c.getString(R.string.url))
-                    .addConverterFactory(GsonConverterFactory.create()).client(httpClient.build())
-                    .build();
+            try {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(c.getString(R.string.url))
+                        .client(httpClient)
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build();
 
-            Medicaoapi medicaoapi = retrofit.create(Medicaoapi.class);
-            Call<Medicao> clmedicao = medicaoapi.loaddescription();
+                Medicaoapi medicaoapi = retrofit.create(Medicaoapi.class);
+                Call<Medicao> clmedicao = medicaoapi.loaddescription();
 
-            clmedicao.enqueue(new Callback<Medicao>() {
-                Context c;
-                View view;
-                MedicaoApiBaseCalback callb;
+                clmedicao.enqueue(new Callback<Medicao>() {
+                    Context c;
+                    View view;
+                    MedicaoApiBaseCalback callb;
+                    View.OnClickListener wifi;
 
-                public Callback<Medicao> load(View view,Context c, MedicaoApiBaseCalback call) {
-                    this.c = c;
-                    this.callb = call;
-                    this.view = view;
-                    return this;
-                }
-
-                @Override
-                public void onResponse(Call<Medicao> call, retrofit2.Response<Medicao> response) {
-                    if (response.isSuccessful()) {
-                        Medicao medicao = response.body();
-                        medicao.setPlanta(Setings.planta.getNome());
-                        medicao.setDatamedicaoDate(new Date());
-                        add(Setings.user, medicao, c);
-                        if (callb != null) {
-                            callb.onCalback(medicao);
-                        }
-
-                        Snackbar.make(view, "Medida Realizada", Snackbar.LENGTH_LONG).show();
+                    public Callback<Medicao> load(View view,Context c, MedicaoApiBaseCalback call,View.OnClickListener wifi) {
+                        this.c = c;
+                        this.callb = call;
+                        this.view = view;
+                        this.wifi = wifi;
+                        return this;
                     }
-                }
 
-                @Override
-                public void onFailure(Call<Medicao> call, Throwable t) {
-                    int a = 4;
-                }
-            }.load(view,c, callback));
+                    @Override
+                    public void onResponse(Call<Medicao> call, retrofit2.Response<Medicao> response) {
+                        if (response.isSuccessful()) {
+                            Medicao medicao = response.body();
+                            medicao.setPlanta(Setings.planta.getNome());
+                            medicao.setDatamedicaoDate(new Date());
+                            add(Setings.user, medicao, c);
+                            if (callb != null) {
+                                callb.onCalback(medicao);
+                            }
 
+                            Snackbar.make(view, R.string.msg_sucesso_medida, Snackbar.LENGTH_LONG).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Medicao> call, Throwable t) {
+                        Snackbar.make(view,R.string.msg_erro_wifi1,Snackbar.LENGTH_LONG)
+                                .setDuration(2300).show();
+
+                        new Timer().schedule(new TimerTask() {
+                            @Override
+                            public void run() {
+                                Snackbar.make(view, R.string.msg_erro_wifi2, Snackbar.LENGTH_LONG)
+                                        .setDuration(8000)
+                                        .setAction(R.string.msg_alerta_wifi, wifi).show();
+                            }
+                        }, 2301);
+                    }
+                }.load(view,c, callback,wifi));
+            }catch (Exception e){
+                Snackbar.make(view, R.string.msg_erro_connectSuport, Snackbar.LENGTH_LONG).show();
+            }
         } else {
 
-            Snackbar.make(view, "Por favor, Selecione uma planta.", Snackbar.LENGTH_LONG).show();
+            Snackbar.make(view, R.string.msg_BO_selectpl, Snackbar.LENGTH_LONG).show();
         }
         return null;
     }

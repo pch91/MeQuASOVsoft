@@ -9,5 +9,23 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="btnmedir">btnmedir</string>
     <string name="textslPlantas">Selecina a planta para medição</string>
-    <string name="url">http://www.mocky.io/v2/5cc49b103400005500765575/</string>
+    <string name="url">http://192.168.4.1:80/</string>
+    <string name="action_ReloadPlanta">Recarregar Plantas</string>
+    <string name="selectpl">"Selecione uma planta."</string>
+    <!--string name="url">http://www.mocky.io/v2/5cc49b103400005500765575/?fbclid=IwAR2vfLT7q1cuMU97o4atHX-jp0WR6oR-X3BRuFzEqPOtNL0LHFkkL9VdwZU/</string-->
+
+
+    <string name="msg_erro_offline">Voce Está sem internet ( modo ofiline ). Para primeira vez e recomendado estar online.</string>
+    <string name="msg_erro_LoginErrado">"CPF e Senha não podem Estar Brancos.</string>
+    <string name="msg_erro_connectSuport">Não foi possivel se conectar MeQuASOV entre em contato com o suporte na caixa do produto.</string>
+    <string name="msg_erro_wifi1">MeQuASOV não encontrado. Verifique se o dispositivo esteja ligador  ou</string>
+    <string name="msg_erro_wifi2">se o telefone ta conectado ao wifi mequasov... do dispositivo.</string>
+
+    <string name="msg_sucesso_medida">Medida Realizada.</string>
+
+    <string name="msg_alerta_wifi"> Ver Wifi. </string>
+    <string name="msg_BO_selectpl">Por favor, Selecione uma planta.</string>
+
+
+
 </resources>
