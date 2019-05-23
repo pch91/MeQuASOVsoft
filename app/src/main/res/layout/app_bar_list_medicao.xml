@@ -92,16 +92,24 @@
         <TextView
             android:id="@+id/TextMedir"
             android:layout_width="71dp"
-            android:layout_height="74dp"
+            android:layout_height="27dp"
             android:layout_gravity="center_horizontal|top"
+            android:background="@drawable/merdir_border"
+            android:bottomLeftRadius="10dp"
+            android:bottomRightRadius="10dp"
+            android:ems="10"
             android:hint="medir"
+            android:keyboardNavigationCluster="false"
+            android:maxEms="10"
+            android:minEms="10"
             android:text="medir"
             android:textAlignment="center"
             android:textAllCaps="true"
-            android:textColor="@color/common_google_signin_btn_text_dark_focused"
+            android:textColor="@color/common_google_signin_btn_text_dark_pressed"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:backgroundTint="@color/common_google_signin_btn_text_dark_focused"
+            android:topLeftRadius="10dp"
+            android:topRightRadius="10dp"
             app:layout_anchorGravity="center_horizontal|top" />
 
     </FrameLayout>

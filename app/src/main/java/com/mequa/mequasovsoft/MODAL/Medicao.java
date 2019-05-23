@@ -106,7 +106,7 @@ public class Medicao implements Comparable<Medicao>{
         if (getDatamedicao() == null || o.getDatamedicao() == null)
             return 0;
         try {
-            return (Util.convertStringTodate(getDatamedicao())).compareTo( Util.convertStringTodate(o.getDatamedicao()));
+            return (Util.convertStringTodate(getDatamedicao())).compareTo( Util.convertStringTodate(o.getDatamedicao()))*-1;
         } catch (ParseException e) {
             e.printStackTrace();
         }

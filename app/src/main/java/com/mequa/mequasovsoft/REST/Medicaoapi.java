@@ -10,7 +10,7 @@ import com.mequa.mequasovsoft.MODAL.*;
 public interface Medicaoapi {
 
     @Headers("Content-Type: application/json")
-    @GET("medicao/")
+    @GET("/")
     Call<Medicao> loaddescription();
 
 }
