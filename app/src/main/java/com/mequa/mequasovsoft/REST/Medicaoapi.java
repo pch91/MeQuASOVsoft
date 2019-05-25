@@ -11,6 +11,7 @@ public interface Medicaoapi {
 
     @Headers("Content-Type: application/json")
     @GET("/")
+    //@GET("medicao/")
     Call<Medicao> loaddescription();
 
 }

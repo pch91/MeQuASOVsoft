@@ -1,5 +1,11 @@
 package com.mequa.mequasovsoft.Util;
 
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.provider.Settings;
+
+import com.mequa.mequasovsoft.ListMedicao;
+
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -46,7 +52,9 @@ public class Util {
         return null;
     }
 
-    final static String DATE_FORMAT = "dd/MM/yyyy hh:mm:ss";
+
+
+    final static String DATE_FORMAT = "dd/MM/yyyy HH:mm:ss";
 
     public static boolean isDateValid(String date) {
         try {
@@ -57,6 +65,35 @@ public class Util {
         } catch (ParseException e) {
             return false;
         }
+    }
+
+    public static void ctrateprogressDialog(Context c){
+        ProgressDialog progressDialog = new ProgressDialog(c);
+        Setings.progressDialog = progressDialog;
+    }
+
+    public static void hidload(String msg){
+
+        ProgressDialog progressDialog = Setings.progressDialog;
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setCancelable(true);
+        progressDialog.setCanceledOnTouchOutside(true);
+        progressDialog.setTitle(msg);
+        progressDialog.hide();
+
+    }
+
+    public static void showload(String msg){
+
+        ProgressDialog progressDialog = Setings.progressDialog;
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setIndeterminate(false);
+        progressDialog.setCancelable(false);
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setTitle(msg);
+        progressDialog.show();
+
     }
 
 }

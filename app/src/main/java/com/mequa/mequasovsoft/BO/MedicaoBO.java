@@ -15,6 +15,7 @@ import com.mequa.mequasovsoft.MODAL.User;
 import com.mequa.mequasovsoft.R;
 import com.mequa.mequasovsoft.REST.Medicaoapi;
 import com.mequa.mequasovsoft.Util.Setings;
+import com.mequa.mequasovsoft.Util.Util;
 
 import java.io.IOException;
 import java.util.Date;
@@ -57,6 +58,7 @@ public class MedicaoBO {
 
         if (Setings.planta != null) {
 
+            Util.showload("Medindo...");
             /*httpClient.addInterceptor(new Interceptor() {
                 @Override
                 public Response intercept(Chain chain) throws IOException {
@@ -106,6 +108,7 @@ public class MedicaoBO {
 
                     @Override
                     public void onFailure(Call<Medicao> call, Throwable t) {
+                        Util.hidload("Medindo...");
                         Snackbar.make(view,R.string.msg_erro_wifi1,Snackbar.LENGTH_LONG)
                                 .setDuration(2300).show();
 
@@ -120,10 +123,11 @@ public class MedicaoBO {
                     }
                 }.load(view,c, callback,wifi));
             }catch (Exception e){
+                Util.hidload("Medindo...");
                 Snackbar.make(view, R.string.msg_erro_connectSuport, Snackbar.LENGTH_LONG).show();
             }
         } else {
-
+            Util.hidload("Medindo...");
             Snackbar.make(view, R.string.msg_BO_selectpl, Snackbar.LENGTH_LONG).show();
         }
         return null;

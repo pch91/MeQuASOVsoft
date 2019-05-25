@@ -23,7 +23,12 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
-
+    <ProgressBar
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_alignParentBottom="true"
+        android:indeterminate="true"
+        android:visibility="invisible"/>
 
 
 </android.support.constraint.ConstraintLayout>

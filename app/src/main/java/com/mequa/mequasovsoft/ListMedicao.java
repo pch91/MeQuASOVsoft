@@ -1,5 +1,6 @@
 package com.mequa.mequasovsoft;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -25,6 +26,7 @@ import com.mequa.mequasovsoft.CALBACKS.FireBaseCalback;
 import com.mequa.mequasovsoft.MODAL.Medicao;
 import com.mequa.mequasovsoft.MODAL.Planta;
 import com.mequa.mequasovsoft.Util.Setings;
+import com.mequa.mequasovsoft.Util.Util;
 import com.mequa.mequasovsoft.item_view_holder.MedicaoListItem;
 import com.mequa.mequasovsoft.Util.BaseActivity;
 import com.xwray.groupie.GroupAdapter;
@@ -52,6 +54,8 @@ public class ListMedicao extends BaseActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         //Atualizar pantas
+
+        Util.ctrateprogressDialog(ListMedicao.this);
 
         try {
             pbo.setEventiListenerMedicao(getApplicationContext());
@@ -186,6 +190,9 @@ public class ListMedicao extends BaseActivity
                 ListmedicaoView.setLayoutManager(new GridLayoutManager(ListMedicao.this, 1));
                 ListmedicaoView.setAdapter(adapter);
                 populateViewListPessoa(lpromo,adapter);
+
+                Util.hidload("medindo");
+
             }
         },Setings.user);
     }
