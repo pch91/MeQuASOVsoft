@@ -7,12 +7,15 @@ import android.view.View;
 
 import com.mequa.mequasovsoft.CALBACKS.FireBaseCalback;
 import com.mequa.mequasovsoft.CALBACKS.UserCalback;
+import com.mequa.mequasovsoft.Execeptions.ValidationException;
 import com.mequa.mequasovsoft.MODAL.Medicao;
 import com.mequa.mequasovsoft.MODAL.Planta;
 import com.mequa.mequasovsoft.MODAL.User;
 import com.mequa.mequasovsoft.DAO.UserDao;
+import com.mequa.mequasovsoft.R;
 import com.mequa.mequasovsoft.Util.Setings;
 import com.mequa.mequasovsoft.Util.Util;
+import com.mequa.mequasovsoft.Util.CpfCnpjUtils;
 
 
 import org.json.JSONException;
@@ -34,45 +37,49 @@ public class UserBO {
         Userdao.getObject(User.class, "cadastros", user.getCPF(),fireBaseCalback);
     }
 
-    public void Login(View view, UserCalback UserCalback, User user) throws IllegalAccessException, InstantiationException{
-        Userdao.getObject(User.class, "cadastros", user.getCPF(), new FireBaseCalback() {
-            User user;
-            View view;
-            UserCalback UserCalback;
+    public void Login(View view, UserCalback UserCalback, User user) throws IllegalAccessException, InstantiationException, ValidationException {
+        if(CpfCnpjUtils.isValid(user.getCPF())) {
+            Userdao.getObject(User.class, "cadastros", user.getCPF(), new FireBaseCalback() {
+                User user;
+                View view;
+                UserCalback UserCalback;
 
-            public FireBaseCalback load(View view,UserCalback UserCalback, User user ){
-                this.user = user;
-                this.view = view;
-                this.UserCalback = UserCalback;
-                return this;
-            }
-
-            @Override
-            public <T> void onCalback(List<T> list) {
-                List<User> lu = (List<User>) list;
-
-                for (User u:lu) {
-                    if(u.getCPF().equals(this.user.getCPF()) && Util.castMD5(this.user.getSenha()).equals(u.getSenha())){
-                        Setings.user = u;
-                        UserCalback.onCalback(u);
-                    }else{
-                        Snackbar.make(view, "Senha ou cpf Incorreto.", Snackbar.LENGTH_LONG).show();
-                    }
+                public FireBaseCalback load(View view, UserCalback UserCalback, User user) {
+                    this.user = user;
+                    this.view = view;
+                    this.UserCalback = UserCalback;
+                    return this;
                 }
-                if(lu.size() < 1)
-                    Snackbar.make(view, "Usuario não cadastrado.", Snackbar.LENGTH_LONG).show();
-            }
-        }.load(view, UserCalback ,user));
+
+                @Override
+                public <T> void onCalback(List<T> list) {
+                    List<User> lu = (List<User>) list;
+
+                    for (User u : lu) {
+                        if (u.getCPF().equals(this.user.getCPF()) && Util.castMD5(this.user.getSenha()).equals(u.getSenha())) {
+                            Setings.user = u;
+                            UserCalback.onCalback(u);
+                        } else {
+                            Snackbar.make(view, "Senha ou cpf Incorreto.", Snackbar.LENGTH_LONG).show();
+                        }
+                    }
+                    if (lu.size() < 1)
+                        Snackbar.make(view, "Usuario não cadastrado.", Snackbar.LENGTH_LONG).show();
+                }
+            }.load(view, UserCalback, user));
+        }else{
+            throw new ValidationException(view.getContext().getString(R.string.cpfInvalido));
+        }
     }
 
-    public void add(User u,Context c,UserCalback userCalback){
-        try {
+    public void add(User u,Context c,UserCalback userCalback) throws ValidationException, IOException {
+        if(CpfCnpjUtils.isValid(u.getCPF())){
             u.setSenha(Util.castMD5(u.getSenha()));
             Userdao.add(u,c);
             Setings.user = u;
             userCalback.onCalback(u);
-        } catch (IOException e) {
-            e.printStackTrace();
+        }else{
+            throw new ValidationException(c.getString(R.string.cpfInvalido));
         }
     }
     public void addFile(User u, Context c) throws IOException {

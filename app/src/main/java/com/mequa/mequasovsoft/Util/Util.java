@@ -2,6 +2,7 @@ package com.mequa.mequasovsoft.Util;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.net.ConnectivityManager;
 import android.provider.Settings;
 
 import com.mequa.mequasovsoft.ListMedicao;
@@ -95,5 +96,19 @@ public class Util {
         progressDialog.show();
 
     }
+
+    public static boolean verificaConexao(Context c) {
+        boolean conectado;
+        ConnectivityManager conectivtyManager = (ConnectivityManager) c.getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (conectivtyManager.getActiveNetworkInfo() != null && conectivtyManager.getActiveNetworkInfo().isAvailable()
+                && conectivtyManager.getActiveNetworkInfo().isConnected())
+        {
+            conectado = true;
+        } else {
+            conectado = false;
+        }
+        return conectado;
+    }
+
 
 }

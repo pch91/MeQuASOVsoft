@@ -13,9 +13,11 @@ import com.google.android.gms.common.util.Strings;
 import com.mequa.mequasovsoft.BO.PlantaBO;
 import com.mequa.mequasovsoft.BO.UserBO;
 import com.mequa.mequasovsoft.CALBACKS.UserCalback;
+import com.mequa.mequasovsoft.Execeptions.ValidationException;
 import com.mequa.mequasovsoft.MODAL.User;
 import com.mequa.mequasovsoft.Util.Setings;
 import com.mequa.mequasovsoft.Util.BaseActivity;
+import com.mequa.mequasovsoft.Util.Util;
 
 import org.json.JSONException;
 
@@ -75,8 +77,6 @@ public class principal extends BaseActivity {
             u.setId(((TextView)findViewById(R.id.TextCPF)).getText().toString());
             u.setCPF(((TextView)findViewById(R.id.TextCPF)).getText().toString());
             u.setSenha(((TextView)findViewById(R.id.TextSenha)).getText().toString());
-
-
             try {
                 ubo.Login(v, new UserCalback() {
                     @Override
@@ -91,6 +91,8 @@ public class principal extends BaseActivity {
                         startActivity(intent);
                     }
                 }, u);
+            } catch (ValidationException e) {
+                Snackbar.make(v, e.getMessage(), Snackbar.LENGTH_LONG).show();
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             } catch (InstantiationException e) {
@@ -120,19 +122,37 @@ public class principal extends BaseActivity {
             u.setSenha(((TextView)findViewById(R.id.TextSenha)).getText().toString());
 
             if(Strings.emptyToNull(u.getSenha()) != null && Strings.emptyToNull(u.getCPF()) != null){
-                ubo.add(u, getApplicationContext(), new UserCalback() {
-                    @Override
-                    public <T> void onCalback(T User) {
-                        try {
-                            ubo.addFile((User) User,getApplicationContext());
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        Intent intent = new Intent(principal.this, ListMedicao.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(intent);
+                if(Util.verificaConexao(getApplicationContext())) {
+                    try {
+                        ubo.add(u, getApplicationContext(), new UserCalback() {
+
+                            @Override
+                            public <T> void onCalback(T User) {
+                                try {
+                                    ubo.addFile((User) User, getApplicationContext());
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                Intent intent = new Intent(principal.this, ListMedicao.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
+                            }
+                        });
+                    } catch (ValidationException e) {
+                        Snackbar.make(v, e.getMessage(), Snackbar.LENGTH_LONG).show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
-                });
+                }else{
+                    Snackbar.make(v, R.string.offlineCadastroError, Snackbar.LENGTH_LONG)
+                            .setDuration(8000)
+                            .setAction(R.string.msg_alerta_wifi, new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    openWifi();
+                                }
+                            }).show();
+                }
             }else{
                 Snackbar.make(v, R.string.msg_erro_LoginErrado, Snackbar.LENGTH_LONG).show();
             }

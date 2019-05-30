@@ -26,7 +26,8 @@
 
     <string name="msg_alerta_wifi"> Ver Wifi. </string>
     <string name="msg_BO_selectpl">Por favor, Selecione uma planta.</string>
-
+    <string name="cpfInvalido">CPF invelido.</string>
+    <string name="offlineCadastroError">Para se cadastrar Precisa estar Online.</string>
 
 
 </resources>
