@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -23,6 +24,7 @@ import com.mequa.mequasovsoft.BO.MedicaoBO;
 import com.mequa.mequasovsoft.BO.PlantaBO;
 import com.mequa.mequasovsoft.BO.UserBO;
 import com.mequa.mequasovsoft.CALBACKS.FireBaseCalback;
+import com.mequa.mequasovsoft.CALBACKS.MedicaoApiBaseCalback;
 import com.mequa.mequasovsoft.MODAL.Medicao;
 import com.mequa.mequasovsoft.MODAL.Planta;
 import com.mequa.mequasovsoft.Util.Setings;
@@ -56,6 +58,9 @@ public class ListMedicao extends BaseActivity
         //Atualizar pantas
 
         Util.ctrateprogressDialog(ListMedicao.this);
+        RecyclerView ListmedicaoView = findViewById(R.id.medicaoListView);
+        ListmedicaoView.setLayoutManager(new GridLayoutManager(ListMedicao.this, 1));
+        ListmedicaoView.setAdapter(adapter);
 
         try {
             pbo.setEventiListenerMedicao(getApplicationContext());
@@ -72,7 +77,16 @@ public class ListMedicao extends BaseActivity
             @Override
             public void onClick(final View view) {
                 MedicaoBO m =  new MedicaoBO();
-                m.medir(view, getApplicationContext(), null, new View.OnClickListener() {
+                m.medir(view, getApplicationContext(), new MedicaoApiBaseCalback() {
+                    @Override
+                    public void onCalback(Medicao medicao) {
+                        List<Medicao> lm = new ArrayList<Medicao>();
+                        lm.add(medicao);
+                        populateViewListPessoa(lm,adapter);
+                        Util.hidload("medindo");
+                        Snackbar.make(findViewById(R.id.nav_view), R.string.msg_sucesso_medida, Snackbar.LENGTH_LONG).show();
+                    }
+                }, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         openWifi();
@@ -180,19 +194,17 @@ public class ListMedicao extends BaseActivity
 
     private void Load() throws InstantiationException, IllegalAccessException {
         MedicaoBO Lpbo = new MedicaoBO();
+
         Lpbo.setEventiListenerMedicao(new FireBaseCalback() {
             @Override
             public <T> void onCalback(List<T> list) {
                 List<Medicao> lpromo = (List<Medicao>) list;
                 Collections.sort(lpromo);
                 adapter.clear();
-                RecyclerView ListmedicaoView = findViewById(R.id.medicaoListView);
-                ListmedicaoView.setLayoutManager(new GridLayoutManager(ListMedicao.this, 1));
-                ListmedicaoView.setAdapter(adapter);
                 populateViewListPessoa(lpromo,adapter);
 
                 Util.hidload("medindo");
-
+                //Snackbar.make(findViewById(R.id.ListMedicaoView), R.string.msg_sucesso_medida, Snackbar.LENGTH_LONG).show();
             }
         },Setings.user);
     }

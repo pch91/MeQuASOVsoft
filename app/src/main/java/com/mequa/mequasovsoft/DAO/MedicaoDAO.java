@@ -6,6 +6,7 @@ import com.google.android.gms.common.util.Strings;
 import com.mequa.mequasovsoft.MODAL.*;
 
 import java.io.IOException;
+import java.lang.ref.Reference;
 
 public class MedicaoDAO  extends ComunsDAO  {
 
@@ -22,5 +23,7 @@ public class MedicaoDAO  extends ComunsDAO  {
                 "/"+medicao.getClass().getSimpleName().toLowerCase()+"/"+medicao.getId()).setValue(medicao);
         Refdatabase.child(u.getClass().getSimpleName().toLowerCase()+"/"+u.getCPF()+
                 "/Plantas/"+medicao.getPlanta()+"/"+medicao.getClass().getSimpleName().toLowerCase()+"/"+medicao.getId()).setValue(medicao);
+
+        Refdatabase.keepSynced(true);
     }
 }

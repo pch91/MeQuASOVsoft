@@ -102,7 +102,6 @@ public class MedicaoBO {
                                 callb.onCalback(medicao);
                             }
 
-                            Snackbar.make(view, R.string.msg_sucesso_medida, Snackbar.LENGTH_LONG).show();
                         }
                     }
 
