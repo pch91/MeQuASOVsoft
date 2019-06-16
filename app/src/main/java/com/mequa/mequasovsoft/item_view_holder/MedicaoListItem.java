@@ -43,7 +43,7 @@ public class MedicaoListItem extends Item<MedicaoListViewHouder> {
         try {
             Planta planta = pbo.getPlanta(medicao.getPlanta(),c);
             String[] temp = planta.getTemperatura().split(",");
-            String[] humsolo = planta.getUmidade().split(",");
+            String[] humsolo = planta.getUmidadear().split(",");
             String[] hum = planta.getUmidade().split(",");
 
             if(Integer.parseInt(temp[0]) < medicao.getTemperatura() && Integer.parseInt(temp[1]) > medicao.getTemperatura() ){
