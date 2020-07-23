@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ListMedicao">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/darker_gray"
+            android:orientation="vertical">
+
+            <Spinner
+                android:id="@+id/listadeplantas"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:dropDownWidth="match_parent"
+                android:gravity="center"
+                android:minWidth="@android:dimen/notification_large_icon_height"
+                android:tooltipText="@string/textslPlantas" />
+        </LinearLayout>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <!--LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:orientation="vertical"
+        app:layout_anchor="@+id/include"
+        app:layout_anchorGravity="right|bottom">
+
+        <TextView
+            android:id="@+id/legendamedir"
+            android:layout_width="82dp"
+            android:layout_height="36dp"
+            android:autoSizeMaxTextSize="@android:dimen/dialog_min_width_major"
+            android:autoSizeMinTextSize="@dimen/fab_margin"
+            android:background="@android:drawable/dialog_holo_light_frame"
+            android:backgroundTint="@color/common_google_signin_btn_text_dark_focused"
+            android:fontFamily="monospace"
+            android:gravity="top|right"
+            android:paddingLeft="5sp"
+            android:paddingRight="5sp"
+            android:text="Medir"
+            android:textAlignment="center"
+            android:textColor="@color/common_google_signin_btn_text_dark_default"
+            android:textStyle="bold" />
+
+
+
+
+    </LinearLayout-->
+    <include
+        android:id="@+id/include"
+        layout="@layout/content_list_medicao" />
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="95dp"
+        android:layout_gravity="bottom|end"
+        app:layout_anchorGravity="right|bottom">
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/medir"
+            android:layout_width="wrap_content"
+            android:layout_height="56dp"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            android:textDirection="inherit"
+            android:tooltipText="teste"
+            app:backgroundTint="@color/common_google_signin_btn_text_dark_focused"
+            app:backgroundTintMode="src_in"
+            app:layout_anchor="@+id/include"
+            app:layout_anchorGravity="right|bottom"
+            app:srcCompat="@android:drawable/ic_input_add" />
+
+        <TextView
+            android:id="@+id/TextMedir"
+            android:layout_width="71dp"
+            android:layout_height="27dp"
+            android:layout_gravity="center_horizontal|top"
+            android:background="@drawable/merdir_border"
+            android:bottomLeftRadius="10dp"
+            android:bottomRightRadius="10dp"
+            android:ems="10"
+            android:hint="medir"
+            android:keyboardNavigationCluster="false"
+            android:maxEms="10"
+            android:minEms="10"
+            android:text="medir"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="@color/common_google_signin_btn_text_dark_pressed"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:topLeftRadius="10dp"
+            android:topRightRadius="10dp"
+            app:layout_anchorGravity="center_horizontal|top" />
+
+    </FrameLayout>
+
+</android.support.design.widget.CoordinatorLayout>
